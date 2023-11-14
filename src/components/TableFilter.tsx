@@ -41,7 +41,7 @@ function generatePrimeNumbersObject(n: number): { [key: number]: boolean } {
   return primes;
 }
 export default function QuickFilteringGrid() {
-  const [primeNumbers, setPrimeNumbers] = React.useState({ 2: true });
+  const [primeNumbers, setPrimeNumbers] = React.useState<{ [key: number]: boolean }>({ 2: true });
   const query = useQuery<MockItem[]>({
     queryKey: ["posts"],
     queryFn: () =>
@@ -62,7 +62,10 @@ export default function QuickFilteringGrid() {
 
   const getRowClassName = React.useCallback(
     (params: GridRowParams) => {
-      return primeNumbers[params.row.userId] && "italic";
+      if(primeNumbers[params.row.userId]){
+        return "italic"
+      }
+     return ""
     },
     [primeNumbers]
   );
