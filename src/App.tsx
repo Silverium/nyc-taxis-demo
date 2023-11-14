@@ -28,6 +28,13 @@ export default function App() {
             </a>
           </li>
         </ul>
+        <h2>Instructions</h2>
+        <p>
+          The goal of this exercise is to create a data grid that displays data
+          from the JSONPlaceholder API. The data grid should be able to filter
+          by title, to be able to edit fields, and to highlight (with italic) the title of the rows where the
+          user ID is a prime number.
+          </p>
         <TableFilter />
       </div>
     </QueryClientProvider>
