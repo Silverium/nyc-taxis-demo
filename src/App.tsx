@@ -4,6 +4,7 @@ import TableFilter from "./components/TableFilter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import { Link, ListItemText } from "@mui/material";
 const queryClient = new QueryClient();
 
 export default function App() {
@@ -14,19 +15,26 @@ export default function App() {
         <h2>Tech stack used</h2>
         <List>
           <ListItem alignItems="center">
-            <a href="https://mui.com/components/data-grid/">
-              MUI Data Grid
-            </a>
+            <ListItemText sx={{ textAlign: "center" }}>
+              <Link href="https://mui.com/components/data-grid/">
+                MUI Data Grid
+              </Link>
+
+            </ListItemText>
           </ListItem >
           <ListItem alignItems="center">
-            <a href="https://react-query.tanstack.com/">
-              React Query
-            </a>
+            <ListItemText sx={{ textAlign: "center" }}>
+              <Link href="https://react-query.tanstack.com/">
+                React Query
+              </Link>
+            </ListItemText>
           </ListItem>
           <ListItem alignItems="center">
-            <a href="https://jsonplaceholder.typicode.com/">
-              JSONPlaceholder
-            </a>
+            <ListItemText sx={{ textAlign: "center" }}>
+              <Link href="https://jsonplaceholder.typicode.com/">
+                JSONPlaceholder
+              </Link>
+            </ListItemText>
           </ListItem>
         </List>
         <h2>Instructions</h2>
