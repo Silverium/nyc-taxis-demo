@@ -8,6 +8,12 @@ import {
 } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 
+type MockItem = {
+  id: number;
+  userId: number;
+  title: string;
+  body: string;
+}
 const exerciseCols: GridColDef[] = [
   // { field: "id", hidden: true },
   { field: "title", width: 400 },
@@ -36,7 +42,7 @@ function generatePrimeNumbersObject(n: number): { [key: number]: boolean } {
 }
 export default function QuickFilteringGrid() {
   const [primeNumbers, setPrimeNumbers] = React.useState({ 2: true });
-  const query = useQuery({
+  const query = useQuery<MockItem[]>({
     queryKey: ["posts"],
     queryFn: () =>
       fetch("https://jsonplaceholder.typicode.com/posts").then((response) =>
