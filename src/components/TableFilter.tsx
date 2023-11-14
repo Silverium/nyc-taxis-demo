@@ -16,9 +16,9 @@ type MockItem = {
 }
 const exerciseCols: GridColDef[] = [
   // { field: "id", hidden: true },
-  { field: "title", width: 400 },
-  { field: "userId" },
-  { field: "body", width: 400 }
+  { field: "title", width: 400, headerName: "Title" },
+  { field: "userId", headerName: "User ID", width: 100 },
+  { field: "body", width: 400, headerName: "Text Body" }
 ];
 function generatePrimeNumbersObject(n: number): { [key: number]: boolean } {
   const primes: { [key: number]: boolean } = {};
@@ -41,7 +41,7 @@ function generatePrimeNumbersObject(n: number): { [key: number]: boolean } {
   return primes;
 }
 export default function QuickFilteringGrid() {
-  const [primeNumbers, setPrimeNumbers] = React.useState({ 2: true });
+  const [primeNumbers, setPrimeNumbers] = React.useState<{ [key: number]: boolean }>({ 2: true });
   const query = useQuery<MockItem[]>({
     queryKey: ["posts"],
     queryFn: () =>
@@ -62,7 +62,10 @@ export default function QuickFilteringGrid() {
 
   const getRowClassName = React.useCallback(
     (params: GridRowParams) => {
-      return primeNumbers[params.row.userId] && "italic";
+      if(primeNumbers[params.row.userId]){
+        return "italic"
+      }
+     return ""
     },
     [primeNumbers]
   );
