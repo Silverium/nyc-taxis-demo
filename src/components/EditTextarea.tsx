@@ -1,3 +1,10 @@
+import * as React from "react";
+import {
+  GridRenderEditCellParams,
+  useGridApiContext,
+} from "@mui/x-data-grid";
+import { InputBase, InputBaseProps, Paper, Popper } from "@mui/material";
+
 export default function EditTextarea(props: GridRenderEditCellParams<any, string>) {
     const { id, field, value, colDef, hasFocus } = props;
     const [valueState, setValueState] = React.useState(value);
