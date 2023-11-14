@@ -9,6 +9,7 @@ import {
 } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 import EditTextarea from "./EditTextarea";
+import generatePrimeNumbersObject from "../utils/generatePrimeNumbersObject";
 
 type MockItem = {
   id: number;
@@ -23,26 +24,6 @@ const exerciseCols: GridColDef[] = [
   { field: "userId", headerName: "User ID", width: 100 },
   { field: "body", width: 400, headerName: "Text Body" },
 ];
-function generatePrimeNumbersObject(n: number): { [key: number]: boolean } {
-  const primes: { [key: number]: boolean } = {};
-
-  for (let i = 2; i <= n; i++) {
-    let isPrime = true;
-
-    for (let j = 2; j <= Math.sqrt(i); j++) {
-      if (i % j === 0) {
-        isPrime = false;
-        break;
-      }
-    }
-
-    if (isPrime) {
-      primes[i] = true;
-    }
-  }
-
-  return primes;
-}
 
 export default function QuickFilteringGrid() {
   const [primeNumbers, setPrimeNumbers] = React.useState<{
@@ -53,15 +34,20 @@ export default function QuickFilteringGrid() {
     queryFn: () =>
       fetch("https://jsonplaceholder.typicode.com/posts").then((response) =>
         response.json(),
-      ),
+      ).catch((err) => {
+        console.error(err);
+        return [];
+      }),
+      initialData: [],
   });
   React.useEffect(() => {
     if (query.data) {
-      let maxId = 1;
+      let maxUserId = 1;
+      // find the max id so we don't calculate for unnecessary prime numbers
       query.data.forEach((item) => {
-        maxId = Math.max(maxId, item.userId);
+        maxUserId = Math.max(maxUserId, item.userId);
       });
-      const maxPrimeNumbersNeeded = generatePrimeNumbersObject(maxId);
+      const maxPrimeNumbersNeeded = generatePrimeNumbersObject(maxUserId);
       setPrimeNumbers(maxPrimeNumbersNeeded);
     }
   }, [query.data]);
@@ -79,7 +65,7 @@ export default function QuickFilteringGrid() {
   return (
     <Box sx={{ height: 400, width: 1 }}>
       <DataGrid
-        rows={query.data || []}
+        rows={query.data}
         disableColumnFilter
         disableColumnSelector
         disableDensitySelector
