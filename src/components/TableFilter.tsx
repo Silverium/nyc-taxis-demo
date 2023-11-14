@@ -4,7 +4,7 @@ import {
   DataGrid,
   GridToolbar,
   GridColDef,
-  GridRowParams,
+  GridCellParams,
 
 } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
@@ -38,7 +38,7 @@ export default function QuickFilteringGrid() {
         console.error(err);
         return [];
       }),
-      initialData: [],
+    initialData: [],
   });
   React.useEffect(() => {
     if (query.data) {
@@ -52,9 +52,9 @@ export default function QuickFilteringGrid() {
     }
   }, [query.data]);
 
-  const getRowClassName = React.useCallback(
-    (params: GridRowParams) => {
-      if (primeNumbers[params.row.userId]) {
+  const getCellClassName = React.useCallback(
+    (params: GridCellParams) => {
+      if (params.field === "title" && primeNumbers[params.row.userId]) {
         return "italic";
       }
       return "";
@@ -69,7 +69,7 @@ export default function QuickFilteringGrid() {
         disableColumnFilter
         disableColumnSelector
         disableDensitySelector
-        getRowClassName={getRowClassName}
+        getCellClassName={getCellClassName}
         columns={exerciseCols}
         slots={{ toolbar: GridToolbar }}
         slotProps={{
