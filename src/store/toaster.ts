@@ -1,3 +1,4 @@
+import { AlertColor } from '@mui/material'
 import { createSlice } from '@reduxjs/toolkit'
 
 const toaster = createSlice({
@@ -5,18 +6,18 @@ const toaster = createSlice({
     initialState: {
         isOpen: false,
         message: '',
-        type: '',
+        severity: 'success' as AlertColor,
+        autoHideDuration: 5000,
     },
     reducers: {
         open: (state, action) => {
             state.isOpen = true
             state.message = action.payload.message
-            state.type = action.payload.type
+            state.severity = action.payload.severity || 'success'
+            state.autoHideDuration = action.payload.autoHideDuration || 5000
         },
         close: (state) => {
             state.isOpen = false
-            state.message = ''
-            state.type = ''
         },
     },
 })
