@@ -26,7 +26,8 @@ export default function QuickFilteringGrid() {
 
   const query = useQuery<CertificateItem[]>({
     queryKey: ["posts"],
-    queryFn: ()=> getCertificates().then(filterFavoriteCertificates),
+    queryFn: getCertificates,
+    select: filterFavoriteCertificates,
     initialData: [],
   });
 
