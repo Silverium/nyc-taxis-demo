@@ -4,12 +4,12 @@ import {
   DataGrid,
   GridToolbar,
   GridColDef,
-  GridCellParams,
 
 } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
+import { Typography, Tooltip } from "@mui/material";
 
 type CertificateItem = {
   id: number;
@@ -31,10 +31,35 @@ type ApiResult = {
     data: CertificateItem[];
   }
 };
+async function copyToClipboard(data: string): Promise<void> {
+  try {
+    await navigator.clipboard.writeText(data);
+    // TODO: move to a toast
+    console.log('Data copied to clipboard');
+  } catch (err) {
+    console.error('Failed to copy data to clipboard:', err);
+  }
+}
 
 const exerciseCols: GridColDef[] = [
-  { field: "id", hideable: true },
-  { field: "uniqueNumber", width: 400, headerName: "Unique ID",  type: "string",  },
+  {
+    field: "uniqueNumber", width: 400, headerName: "Unique ID", type: "string", renderCell(params) {
+
+      return (
+        <Tooltip arrow title="Click to copy the certificate ID" componentsProps={{
+          tooltip: {
+            sx: {
+              fontSize: 16,
+            },
+          },
+        }}>
+          <Box onClick={()=> copyToClipboard(params.row.uniqueNumber)} justifySelf={"center"} flex={1} flexDirection="column" display="flex" overflow="hidden">
+            <Typography noWrap textOverflow={"ellipsis"}>{params.value}</Typography>
+          </Box>
+        </Tooltip>
+      );
+    },
+  },
   { field: "companyName", headerName: "Originator", width: 200 },
   { field: "countryCode", width: 100, headerName: "Originator Country" },
   {
@@ -48,16 +73,17 @@ const exerciseCols: GridColDef[] = [
     }
   },
   { field: "status", width: 100, headerName: "Status", },
-  {field: "favorite", width: 100, headerName: "", type: "boolean", renderCell(params) {
-    const isFavorite = Math.random() > 0.5; // TODO: replace with actual data from localStorage
-    return isFavorite ? <TurnedInNotIcon /> : <TurnedInIcon />
-  },},
+  {
+    field: "favorite", width: 100, headerName: "", type: "boolean", renderCell(params) {
+      const isFavorite = Math.random() > 0.5; // TODO: replace with actual data from localStorage
+      return isFavorite ? <TurnedInNotIcon /> : <TurnedInIcon />
+    },
+  },
 ];
 
 export default function QuickFilteringGrid() {
-  const [primeNumbers, setPrimeNumbers] = React.useState<{
-    [key: number]: boolean;
-  }>({ 2: true });
+
+
   const query = useQuery<CertificateItem[]>({
     queryKey: ["posts"],
     queryFn: () =>
@@ -82,15 +108,6 @@ export default function QuickFilteringGrid() {
     }
   }, [query.data]);
 
-  const getCellClassName = React.useCallback(
-    (params: GridCellParams) => {
-      if (params.field === "title" && primeNumbers[params.row.userId]) {
-        return "italic";
-      }
-      return "";
-    },
-    [primeNumbers],
-  );
 
   return (
     <Box sx={{ height: 400, width: 1 }}>
@@ -99,7 +116,6 @@ export default function QuickFilteringGrid() {
         disableColumnFilter
         disableColumnSelector
         disableDensitySelector
-        getCellClassName={getCellClassName}
         columns={exerciseCols}
         slots={{ toolbar: GridToolbar }}
         slotProps={{
@@ -107,7 +123,6 @@ export default function QuickFilteringGrid() {
             showQuickFilter: true,
           },
         }}
-        onCellEditStop={(params, event) => console.log("we could save here", { params, event })}
       />
     </Box>
   );
