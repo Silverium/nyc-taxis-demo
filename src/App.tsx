@@ -7,12 +7,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { Box, Link, ListItemText, Typography } from "@mui/material";
+import { Provider } from 'react-redux';
+import store from './store/globalStore';
 const queryClient = new QueryClient();
 
 export default function App() {
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
         <Box className="App">
 
           <Routes>
@@ -84,6 +87,7 @@ export default function App() {
             <Route path="/favorites" Component={FavoriteCertificates} />
           </Routes>
         </Box>
+        </Provider>
       </QueryClientProvider>
     </BrowserRouter>
   );

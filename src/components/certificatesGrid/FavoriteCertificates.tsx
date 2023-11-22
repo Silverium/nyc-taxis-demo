@@ -9,7 +9,6 @@ import { useQuery } from "@tanstack/react-query";
 import { certificatesColumnsDefinitions } from "./config"
 import getCertificates from "../../services/getCertificates";
 import { CertificateItem } from "../../types/CertificatesResponse";
-
 const filterFavoriteCertificates = (certificates: CertificateItem[]) => {
   try { 
     const favoriteCertificates = JSON.parse(localStorage.getItem('favoriteCertificates') || '{}');
