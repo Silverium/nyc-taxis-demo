@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import { Typography, Tooltip } from "@mui/material";
-
+import { useLocalStorage } from 'react-use';
 type CertificateItem = {
   id: number;
   uniqueNumber: string;
@@ -75,8 +75,22 @@ const exerciseCols: GridColDef[] = [
   { field: "status", width: 100, headerName: "Status", },
   {
     field: "favorite", width: 100, headerName: "", type: "boolean", renderCell(params) {
-      const isFavorite = Math.random() > 0.5; // TODO: replace with actual data from localStorage
-      return isFavorite ? <TurnedInNotIcon /> : <TurnedInIcon />
+      const [ favoriteCertificates, setFavoriteCertificates] = useLocalStorage<Record<string, boolean>>('favoriteCertificates', {});
+      const isFavorite = favoriteCertificates![params.row.uniqueNumber];
+      const addFavorite = () => {
+        setFavoriteCertificates({
+          ...favoriteCertificates,
+          [params.row.uniqueNumber]: true
+        });
+      }
+      const removeFavorite = () => {
+        setFavoriteCertificates({
+          ...favoriteCertificates,
+          [params.row.uniqueNumber]: false
+        });
+      }
+
+      return isFavorite ?  <TurnedInIcon onClick={removeFavorite} /> : <TurnedInNotIcon onClick={addFavorite}/>
     },
   },
 ];
