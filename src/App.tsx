@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./styles.css";
-import TableFilter from "./components/TableFilter";
+import TableFilter from "./components/certificatesGrid/TableFilter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
