@@ -8,33 +8,69 @@ import {
 
 } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
-import EditTextarea from "./EditTextarea";
-import generatePrimeNumbersObject from "../utils/generatePrimeNumbersObject";
+import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
+import TurnedInIcon from '@mui/icons-material/TurnedIn';
 
-type MockItem = {
+type CertificateItem = {
   id: number;
-  userId: number;
-  title: string;
-  body: string;
+  uniqueNumber: string;
+  companyName: string;
+  countryCode: string;
+  combinedCertificates?: CertificateItem[];
+  carbonUser: {
+    company: {
+      name: string;
+      address: {
+        country: string;
+      }
+    }
+  }
+};
+type ApiResult = {
+  result: {
+    data: CertificateItem[];
+  }
 };
 
 const exerciseCols: GridColDef[] = [
   { field: "id", hideable: true },
-  { field: "title", width: 400, headerName: "Title", editable: true, renderEditCell: (params) => <EditTextarea {...params} />, type: "string" },
-  { field: "userId", headerName: "User ID", width: 100 },
-  { field: "body", width: 400, headerName: "Text Body" },
+  { field: "uniqueNumber", width: 400, headerName: "Unique ID",  type: "string",  },
+  { field: "companyName", headerName: "Originator", width: 200 },
+  { field: "countryCode", width: 100, headerName: "Originator Country" },
+  {
+    field: "Owner", width: 200, headerName: "Owner", valueGetter(params) {
+      return params.row.carbonUser.company.name
+    },
+  },
+  {
+    field: "OwnerCountry", width: 100, headerName: "Owner Country", valueGetter(params) {
+      return params.row.carbonUser.company.address.country
+    }
+  },
+  { field: "status", width: 100, headerName: "Status", },
+  {field: "favorite", width: 100, headerName: "", type: "boolean", renderCell(params) {
+    const isFavorite = Math.random() > 0.5; // TODO: replace with actual data from localStorage
+    return isFavorite ? <TurnedInNotIcon /> : <TurnedInIcon />
+  },},
 ];
 
 export default function QuickFilteringGrid() {
   const [primeNumbers, setPrimeNumbers] = React.useState<{
     [key: number]: boolean;
   }>({ 2: true });
-  const query = useQuery<MockItem[]>({
+  const query = useQuery<CertificateItem[]>({
     queryKey: ["posts"],
     queryFn: () =>
-      fetch("https://jsonplaceholder.typicode.com/posts").then((response) =>
+      fetch("https://demo.api.agreena.com/api/public/carbon_registry/v1/certificates?includeMeta=true&page=1&limit=10", {
+        headers: {
+          "API-ACCESS-TOKEN": "Commoditrader-React-FE-Farmer"
+        }
+      }).then((response) =>
         response.json(),
-      ).catch((err) => {
+      ).then(({ result: { data } }: ApiResult) => data.flatMap((certificate) => {
+        return certificate.combinedCertificates || certificate
+
+      })).catch((err) => {
         console.error(err);
         return [];
       }),
@@ -42,13 +78,7 @@ export default function QuickFilteringGrid() {
   });
   React.useEffect(() => {
     if (query.data) {
-      let maxUserId = 1;
-      // find the max id so we don't calculate for unnecessary prime numbers
-      query.data.forEach((item) => {
-        maxUserId = Math.max(maxUserId, item.userId);
-      });
-      const maxPrimeNumbersNeeded = generatePrimeNumbersObject(maxUserId);
-      setPrimeNumbers(maxPrimeNumbersNeeded);
+      console.log(`%cquery.data`, 'background-color: lime;', query.data);
     }
   }, [query.data]);
 
