@@ -3,15 +3,6 @@ This is a coding exercise for a FE position
 ## Specifications
 - Use TypeScript
 - Use React
-- Have tests
-- Components should be reusable
-- Use [Material-UI](https://mui.com) or Styled Components
-- Use [React-query](https://react-query.tanstack.com/) for the queries
-- Use [JSONPlaceholder](https://jsonplaceholder.typicode.com/) for the mocked data
-- Show data in a table
-    - Bonus if editing is implemented
-- Support filtering data by "title"
-- All posts with ids as [prime numbers](https://en.wikipedia.org/wiki/List_of_prime_numbers) should have the title in the table shown in italic
 
 # Development mode
 install dependencies with

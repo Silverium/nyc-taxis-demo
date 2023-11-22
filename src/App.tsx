@@ -12,7 +12,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <Box className="App">
         <Typography variant="h2" component="h1">
-          Coding exercise
+          Carbon Certificates app
         </Typography>
         <Typography variant="h3" component="h1">
           Tech stack used
@@ -34,23 +34,44 @@ export default function App() {
               </Link>
             </ListItemText>
           </ListItem>
-          <ListItem alignItems="center">
-            <ListItemText sx={{ textAlign: "center" }}>
-              <Link href="https://jsonplaceholder.typicode.com/">
-                JSONPlaceholder
-              </Link>
-            </ListItemText>
-          </ListItem>
         </List>
         <Typography variant="h3" component="h1">
-          Instructions
+          Features required
         </Typography>
-        <Typography>
-          The goal of this exercise is to create a data grid that displays data
-          from the JSONPlaceholder API. The data grid should be able to filter
-          by title, to be able to edit fields, and to highlight (with italic) the title of the rows where the
-          user ID is a prime number.
-        </Typography>
+        <List>
+          <ListItem>
+            <ListItemText sx={{ fontSize: "20px", color: "GrayText" }}>
+              "Certificates" page - the list of available Carbon certificates
+            </ListItemText>
+            <List>
+              <ListItem >
+                <ListItemText >
+                  Copying the certificate ID to the clipboard
+                </ListItemText>
+              </ListItem >
+              <ListItem >
+                <ListItemText >
+                  Saving the certificate as a favourite (client-side only)
+                </ListItemText>
+              </ListItem >
+            </List>
+          </ListItem >
+          <ListItem>
+            <ListItemText sx={{ fontSize: "20px", color: "GrayText" }}>
+              "Favorites" page - the list of saved Carbon Certificates
+            </ListItemText>
+            <List>
+              <ListItem >
+                <ListItemText >
+                  Same page as "Certificates" with a possibility to remove the certificate from favourites
+                </ListItemText>
+              </ListItem >
+            </List>
+          </ListItem >
+
+
+        </List>
+
         <TableFilter />
       </Box>
     </QueryClientProvider>
