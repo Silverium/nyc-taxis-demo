@@ -8,6 +8,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import {  Box, Link, ListItemText, Typography } from "@mui/material";
 import Toaster from "./components/Toaster";
+import NavigationHeader from "./components/NavigationHeader";
 import { Provider } from 'react-redux';
 import store from './store/globalStore';
 const queryClient = new QueryClient();
@@ -20,13 +21,11 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
           <Box className="App">
+            <NavigationHeader />
 
             <Routes>
               <Route path="/" Component={() => {
                 return <>
-                  <Typography variant="h2" component="h1">
-                    Carbon Certificates app
-                  </Typography>
                   <Typography variant="h3" component="h1">
                     Tech stack used
                   </Typography>

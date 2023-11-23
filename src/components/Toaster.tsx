@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Alert, Snackbar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/globalStore";
