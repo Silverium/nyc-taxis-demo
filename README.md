@@ -1,23 +1,22 @@
-# Mui Grid with Favs
+# NYC taxis demo
 This is a coding exercise for a FE position
-## Specifications
-- Use TypeScript
-- Use React
-##### Features
-###### "Certificates" page - the list of available Carbon certificates 
-- Copying the certificate ID to the clipboard
-- Saving the certificate as a favourite (client-side only)
+### Description
 
-###### "Favourites" page - the list of saved Carbon Certificates
-- Same page as "Certificates" with a possibility to remove the certificate from favourites
+We need you to develop a small application to show the data behind the [API endpoint](https://api.tinybird.co/endpoint/t_f3b68895534049bf859f38a8e5ebc51a?token=p.eyJ1IjogIjdmOTIwMmMzLWM1ZjctNDU4Ni1hZDUxLTdmYzUzNTRlMTk5YSIsICJpZCI6ICJmZTRkNWFiZS05ZWIyLTRjMjYtYWZiZi0yYTdlMWJlNDQzOWEifQ.P67MfoqTixyasaMGH5RIjCrGc0bUKvBoKMwYjfqQN8c),  displaying it with a nice widget component.
 
-##### Technical informations
-For fetching the certificates use our endpoint:
-`https://demo.api.agreena.com/api/public/carbon_registry/v1/certificates?includeMeta=true&page=1&limit=10`
+In short, we will need:
+- A widget for displaying any data. It can be a chart, a list, a counter,... whatever you decide. We encourage you to check the data first and decide what you want to visualize wisely.
+- A filter for changing the information displayed in the widget. It can be a select, a list of checkboxes, a range... It depends on the story you want to tell through the data.
 
-(`API-ACCESS-TOKEN` header with value `Commoditrader-React-FE-Farmer` is needed to authenticate the endpoint)
+**Note:** you don't need to add tons of widgets, with just one is enough for us.
 
-Keep in mind that there could be more than 10 certificates.
+### Rules
+- You CAN use the JS framework you prefer.
+- The app needs to have deep linking. Let the users of the app share the widgets with the filters applied.
+- You CAN use a JavaScript bundler. 
+- Add tests, you CAN use any testing framework. No need to test everything, but at least show us how you approach testing.
+- Take as much time as you need (although we suggest you not spend more than 4-5 hours in total)
+- Add a README.md file with the decisions you took, any detail you want to share with us (possible follow-ups, for example), and the installation instructions. We expect the app to work as expected following your instructions. The explanation is as important as the code, so take some time to write things down.
 
 # Development mode
 install dependencies with
@@ -40,3 +39,6 @@ yarn test
 - Use AI with caution. I used Github Copilot to generate code and tests, but at the end, I had to tweak and check that all was looking good and it met my standards.
 - Test only what is worth to be tested. I tested the [utils](./src/utils/) folder because it has pure functions that need to be reliable, but it makes little sense to do a render test over the small created components, moreover if they are already provided by a battle tested library like Material-UI. Place tests in the same folder as the tested ones, we don't want to have to maintain separated trees of files.
 - Separation of concerns. Components, utils, services, configuration, in their respective folders. Keep each domain separate, easy to be found. 
+
+### Decisions taken
+- import an existing repository from other exercises, which contains a working grid demo.
