@@ -9,12 +9,10 @@ const Toaster = () => {
     const handleClose = () => {
         dispatch(toasterSlice.actions.close())
     };
-    const message = useSelector((state: RootState) => state.toaster.message);
-    const open = useSelector((state: RootState) => state.toaster.isOpen);
-    const severity = useSelector((state: RootState) => state.toaster.severity);
-    const autoHideDuration = useSelector((state: RootState) => state.toaster.autoHideDuration);
+    const { message, isOpen, severity, autoHideDuration } = useSelector((state: RootState) => state.toaster);
+
     return (<Snackbar
-        open={open}
+        open={isOpen}
         autoHideDuration={autoHideDuration}
         onClose={handleClose}
     >
