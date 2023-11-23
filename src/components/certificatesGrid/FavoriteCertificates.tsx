@@ -10,7 +10,7 @@ import { certificatesColumnsDefinitions } from "./config"
 import getCertificates from "../../services/getCertificates";
 import { CertificateItem } from "../../types/CertificatesResponse";
 const filterFavoriteCertificates = (certificates: CertificateItem[]) => {
-  try { 
+  try {
     const favoriteCertificates = JSON.parse(localStorage.getItem('favoriteCertificates') || '{}');
     return certificates.filter(certificate => favoriteCertificates[certificate.uniqueNumber]);
   } catch (error) {
@@ -33,6 +33,18 @@ export default function QuickFilteringGrid() {
   return (
     <Box sx={{ width: 1 }}>
       <DataGrid
+        sx={{
+          boxShadow: 2,
+          border: 2,
+          borderColor: 'primary.light',
+          '& .MuiDataGrid-cell:hover': {
+            color: 'primary.main',
+          },
+          '& .MuiDataGrid-columnHeader': {
+            color: 'GrayText',
+            textTransform: 'uppercase',
+          },
+        }}
         rows={query.data}
         disableColumnFilter
         disableColumnSelector

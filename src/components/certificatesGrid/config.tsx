@@ -11,7 +11,7 @@ import copyToClipboard from "../../utils/copyToClipboard";
 
 export const certificatesColumnsDefinitions: GridColDef[] = [
     {
-        field: "uniqueNumber", width: 400, headerName: "Unique ID", type: "string", renderCell(params) {
+        field: "uniqueNumber", width: 300, headerName: "Unique ID", type: "string", renderCell(params) {
 
             return (
                 <Tooltip arrow title="Click to copy the certificate ID" componentsProps={{
@@ -28,9 +28,9 @@ export const certificatesColumnsDefinitions: GridColDef[] = [
             );
         },
     },
-    { field: "companyName", headerName: "Originator", width: 200 },
+    { field: "companyName", headerName: "Originator", width: 300 },
     {
-        field: "countryCode", width: 100, headerName: "Originator Country", renderCell(params) {
+        field: "countryCode", width: 180, headerName: "Originator Country", renderCell(params) {
             return (<Tooltip arrow title={`${params.row.countryCode}`}>
                 <Box component="img"
                     sx={{
@@ -46,12 +46,12 @@ export const certificatesColumnsDefinitions: GridColDef[] = [
         },
     },
     {
-        field: "Owner", width: 200, headerName: "Owner", valueGetter(params) {
+        field: "Owner", width: 300, headerName: "Owner", valueGetter(params) {
             return params.row.carbonUser.company.name
         },
     },
     {
-        field: "OwnerCountry", width: 100, headerName: "Owner Country", valueGetter(params) {
+        field: "OwnerCountry", width: 150, headerName: "Owner Country", valueGetter(params) {
             return params.row.carbonUser.company.address.country
         }, renderCell(params) {
             const countryCode = params.row.carbonUser.company.address.country;
@@ -69,9 +69,9 @@ export const certificatesColumnsDefinitions: GridColDef[] = [
             </Tooltip >)
         }
     },
-    { field: "status", width: 100, headerName: "Status", },
+    { field: "status", width: 120, headerName: "Status", },
     {
-        field: "favorite", width: 100, headerName: "", type: "boolean", renderCell(params) {
+        field: "favorite", width: 5, headerName: "", type: "boolean", renderCell(params) {
             const [favoriteCertificates, setFavoriteCertificates] = useLocalStorage<Record<string, boolean>>('favoriteCertificates', {});
             const isFavorite = favoriteCertificates![params.row.uniqueNumber];
             const addFavorite = () => {

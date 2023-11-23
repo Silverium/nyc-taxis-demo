@@ -23,6 +23,18 @@ export default function QuickFilteringGrid() {
   return (
     <Box sx={{ width: 1 }}>
       <DataGrid
+        sx={{
+          boxShadow: 2,
+          border: 2,
+          borderColor: 'primary.light',
+          '& .MuiDataGrid-cell:hover': {
+            color: 'primary.main',
+          },
+          '& .MuiDataGrid-columnHeader': {
+            color: 'GrayText',
+            textTransform: 'uppercase',
+          },
+        }}
         rows={query.data}
         disableColumnFilter
         disableColumnSelector
