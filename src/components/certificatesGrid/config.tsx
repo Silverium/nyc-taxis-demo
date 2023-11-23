@@ -29,7 +29,22 @@ export const certificatesColumnsDefinitions: GridColDef[] = [
         },
     },
     { field: "companyName", headerName: "Originator", width: 200 },
-    { field: "countryCode", width: 100, headerName: "Originator Country" },
+    {
+        field: "countryCode", width: 100, headerName: "Originator Country", renderCell(params) {
+            return (<Tooltip arrow title={`${params.row.countryCode}`}>
+                <Box component="img"
+                    sx={{
+                        boxShadow: "0px 0px 10px 3px rgba(0, 0, 0, 0.2)"
+                    }}
+                    loading="lazy"
+                    width="20"
+                    srcSet={`https://flagcdn.com/w40/${params.row.countryCode.toLowerCase()}.png 2x`}
+                    src={`https://flagcdn.com/w20/${params.row.countryCode.toLowerCase()}.png`}
+                    alt={`${params.row.countryCode} flag`}
+                />
+            </Tooltip>)
+        },
+    },
     {
         field: "Owner", width: 200, headerName: "Owner", valueGetter(params) {
             return params.row.carbonUser.company.name
@@ -38,6 +53,20 @@ export const certificatesColumnsDefinitions: GridColDef[] = [
     {
         field: "OwnerCountry", width: 100, headerName: "Owner Country", valueGetter(params) {
             return params.row.carbonUser.company.address.country
+        }, renderCell(params) {
+            const countryCode = params.row.carbonUser.company.address.country;
+            return (<Tooltip arrow title={`${countryCode}`}>
+                <Box component="img"
+                    sx={{
+                        boxShadow: "0px 0px 10px 3px rgba(0, 0, 0, 0.2)"
+                    }}
+                    loading="lazy"
+                    width="20"
+                    srcSet={`https://flagcdn.com/w40/${countryCode.toLowerCase()}.png 2x`}
+                    src={`https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`}
+                    alt={`${countryCode} flag`}
+                />
+            </Tooltip >)
         }
     },
     { field: "status", width: 100, headerName: "Status", },
