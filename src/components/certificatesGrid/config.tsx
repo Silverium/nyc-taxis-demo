@@ -6,8 +6,10 @@ import {
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import { Typography, Tooltip } from "@mui/material";
-import { useLocalStorage } from 'react-use';
 import copyToClipboard from "../../utils/copyToClipboard";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/globalStore";
+import favoriteCertificatesSlice from "../../store/favoriteCertificates";
 
 export const certificatesColumnsDefinitions: GridColDef[] = [
     {
@@ -72,22 +74,14 @@ export const certificatesColumnsDefinitions: GridColDef[] = [
     { field: "status", width: 120, headerName: "Status", },
     {
         field: "favorite", width: 5, headerName: "", type: "boolean", renderCell(params) {
-            const [favoriteCertificates, setFavoriteCertificates] = useLocalStorage<Record<string, boolean>>('favoriteCertificates', {});
+            const favoriteCertificates = useSelector((state: RootState) => state.favoriteCertificates);
+            const dispatch = useDispatch();
             const isFavorite = favoriteCertificates![params.row.uniqueNumber];
-            const addFavorite = () => {
-                setFavoriteCertificates({
-                    ...favoriteCertificates,
-                    [params.row.uniqueNumber]: true
-                });
-            }
-            const removeFavorite = () => {
-                setFavoriteCertificates({
-                    ...favoriteCertificates,
-                    [params.row.uniqueNumber]: false
-                });
+            const toggleFavorite = () => {
+                dispatch(favoriteCertificatesSlice.actions.toggleFavorite(params.row.uniqueNumber));
             }
 
-            return isFavorite ? <TurnedInIcon onClick={removeFavorite} /> : <TurnedInNotIcon onClick={addFavorite} />
+            return isFavorite ? <TurnedInIcon onClick={toggleFavorite} /> : <TurnedInNotIcon onClick={toggleFavorite} />
         },
     },
 ];
