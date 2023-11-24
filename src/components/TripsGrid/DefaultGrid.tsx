@@ -1,19 +1,41 @@
-import * as React from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import {
   DataGrid,
+  GridColumnVisibilityModel,
   GridToolbar,
 
 } from "@mui/x-data-grid";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { certificatesColumnsDefinitions } from "./config"
-import getTaxiData from "../../services/getCertificates";
-
+import getTaxiData from "../../services/getTaxiData";
+import { useSearchParam } from 'react-use';
+import roundToNearest from "../../utils/roundToNearest";
 export default function DefaultGrid() {
+  const pageParam = useSearchParam('page');
+  const pageSizeParam = useSearchParam('pageSize');
+  const hiddenColumnsParam = useSearchParam('hiddenColumns');
   const [paginationModel, setPaginationModel] = React.useState({
-    pageSize: 100,
-    page: 1,
+    pageSize: roundToNearest(parseInt(pageSizeParam || "100"),[25,50,100]), // muix datagrid only supports 25,50,100
+    page: Math.max(parseInt(pageParam || "0"), 0), // page to be minimum 0
   });
+
+  React.useEffect(() => {
+    // update query param from location without triggering a reload
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set('page', paginationModel.page.toString());
+    searchParams.set('pageSize', paginationModel.pageSize.toString());
+    window.history.replaceState(null, '', `${window.location.pathname}?${searchParams.toString()}`);
+  }, [paginationModel])
+  
+  const [columnVisibilityModel, setColumnVisibilityModel] = React.useState<GridColumnVisibilityModel>(decodeURIComponent(hiddenColumnsParam || "").split(',').reduce((acc, curr) => ({ ...acc, [curr]: false }), {}) || {});
+  React.useEffect(() => {
+    // update query param from location without triggering a reload
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set('hiddenColumns', Object.keys(columnVisibilityModel).filter(key => !columnVisibilityModel[key]).join(','));
+    window.history.replaceState(null, '', `${window.location.pathname}?${searchParams.toString()}`);
+  }, [columnVisibilityModel])
+
   const [rowCount, setRowCount] = React.useState(0);
   const query = useQuery<any>({
     queryKey: ["taxi-data", paginationModel.page, paginationModel.pageSize],
@@ -45,7 +67,7 @@ export default function DefaultGrid() {
         }}
         loading={query.isLoading}
         rows={rows}
-        
+
         columns={certificatesColumnsDefinitions}
         slots={{ toolbar: GridToolbar }}
         paginationMode="server"
@@ -55,6 +77,8 @@ export default function DefaultGrid() {
             showQuickFilter: true,
           },
         }}
+        columnVisibilityModel={columnVisibilityModel}
+        onColumnVisibilityModelChange={setColumnVisibilityModel}
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
       />
