@@ -6,10 +6,9 @@ const NavigationHeader: React.FC = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6">Carbon Certificates App</Typography>
+        <Typography variant="h6">NYC Taxi Demo</Typography>
         <Button component={Link} to="/" color="inherit">Home</Button>
-        <Button component={Link} to="/certificates" color="inherit">Certificates</Button>
-        <Button component={Link} to="/favorites" color="inherit">Favorites</Button>
+        <Button component={Link} to="/taxi-trips" color="inherit">Taxi trips</Button>
       </Toolbar>
     </AppBar>
   );

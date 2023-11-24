@@ -1,8 +1,7 @@
 import * as React from "react";
 import "./styles.css";
 import { BrowserRouter, Route, Routes, Link as RouterLink } from 'react-router-dom';
-import TableFilter from "./components/certificatesGrid/TableFilter";
-import FavoriteCertificates from "./components/certificatesGrid/FavoriteCertificates";
+import DefaultGrid from "./components/TripsGrid/DefaultGrid";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -47,7 +46,7 @@ export default function App() {
                       </ListItemText>
                     </ListItem>
                   </List>
-                  <Typography variant="h3" component="h1">
+                  {/* <Typography variant="h3" component="h1">
                     Features required
                   </Typography>
                   <List>
@@ -82,11 +81,10 @@ export default function App() {
                     </ListItem >
 
 
-                  </List>
+                  </List> */}
                 </>
               }} />
-              <Route path="/certificates" Component={TableFilter} />
-              <Route path="/favorites" Component={FavoriteCertificates} />
+              <Route path="/taxi-trips" Component={DefaultGrid} />
             </Routes>
               <Toaster />
           </Box>
