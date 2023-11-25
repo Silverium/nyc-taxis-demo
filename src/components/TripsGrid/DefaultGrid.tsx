@@ -75,7 +75,7 @@ export default function DefaultGrid() {
     <Box sx={{ width: 1 }}>
       <FormControl>
         <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { paddingX: "10px" } }} label="Page" labelPlacement="start" control={
-          <NumberInput value={pageInput} min={0} onInputChange={event => console.log("inputChange", event.currentTarget.value)} onChange={(event, value) => {
+          <NumberInput value={pageInput} min={0}  onChange={(event, value) => {
             const newValue = value || 0;
             setPageInput(newValue);
           }} />
