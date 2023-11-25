@@ -15,7 +15,7 @@ import { NumberInput } from "../NumberInput";
 import { useDispatch } from "react-redux";
 import toasterSlice from "../../store/toaster";
 import { FormControl, FormControlLabel } from "@mui/material";
-
+import { TaxiApiResponse } from "../../types/TaxiApiResponse";
 export default function DefaultGrid() {
   const pageParam = useSearchParam('page');
   const pageSizeParam = useSearchParam('pageSize');
@@ -48,13 +48,13 @@ export default function DefaultGrid() {
   }, [columnVisibilityModel])
 
   const [rowCount, setRowCount] = React.useState(0);
-  const query = useQuery<any>({
+  const query = useQuery<Partial<TaxiApiResponse>>({
     queryKey: ["taxi-data", pageInput, paginationModel.pageSize],
     queryFn: () => getTaxiData(pageInput, paginationModel.pageSize),
-    initialData: { data: [] },
+     initialData: { data: [] },
     placeholderData: keepPreviousData,
   });
-  const rows = query.data.data;
+  const rows = query.data.data!;
   React.useEffect(() => {
     if (rowCount > 0 && pageInput > Math.floor(rowCount / paginationModel.pageSize)) {
       dispatch(toasterSlice.actions.open({
@@ -74,7 +74,7 @@ export default function DefaultGrid() {
   return (
     <Box sx={{ width: 1 }}>
       <FormControl>
-        <FormControlLabel sx={{"& .MuiFormControlLabel-label":{paddingX: "10px"}}} label="Page" labelPlacement="start" control={
+        <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { paddingX: "10px" } }} label="Page" labelPlacement="start" control={
           <NumberInput value={pageInput} min={0} onInputChange={event => console.log("inputChange", event.currentTarget.value)} onChange={(event, value) => {
             const newValue = value || 0;
             setPageInput(newValue);
