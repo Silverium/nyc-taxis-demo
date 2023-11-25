@@ -110,6 +110,7 @@ export default function DefaultGrid() {
         columnVisibilityModel={columnVisibilityModel}
         onColumnVisibilityModelChange={setColumnVisibilityModel}
         paginationModel={paginationModel}
+        onPaginationModelChange={params => setPageInput(params.page)}
       />
     </Box>
   );
