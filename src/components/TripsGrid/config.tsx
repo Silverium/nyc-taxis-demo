@@ -4,6 +4,9 @@ import {
 } from "@mui/x-data-grid";
 
 
+// This object could also be conceived as a function consuming the metadata from the response of tinyBird API.
+// To do that we would create a mapping correlating the type of data with the type of column (flex, valueFormatter, valueGetter...), and
+// another mapping correlating the name of the column with the name of the field in the data (it could even be translated)
 export const certificatesColumnsDefinitions: GridColDef[] = [
     {
         field: "id", headerName: "#", type: "number", flex: 1,

@@ -44,6 +44,10 @@ yarn test
 - import an existing repository from other exercises, which contains a working grid demo.
 - use the `q` parameter to make the requests to the api. Also, use the `LIMIT` and `OFFSET` from SQL to get pages, because requesting without them, the amount of data is too large and it just blows. As we don't need all the data at once, I decided this paginated view instead.
 - use [Mui Data Grid](https://mui.com/components/data-grid/) to display the data, as it has great built-in features which are useful for this exercise.
+- Mui Data Grid (the free version) is limited to 100 results per page, so I took that as the page size.
 - use [React Query](https://react-query.tanstack.com/) to have cached client side requests which are easy to integrate.
-
+- translations were not implemented for the sake of simplicity
+- accessibility has not been taken into account for the sake of simplicity
+- As the amount of data is huge and the Mui Data Grid basic does not have nice pagination controls, it was created a `page` input on top so the user can jump to any desired page.
+- created a toaster to warn user when the end of data has been reached and when there is errors with the API.
 
