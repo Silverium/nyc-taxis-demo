@@ -51,7 +51,7 @@ export default function DefaultGrid() {
   const query = useQuery<Partial<TaxiApiResponse>>({
     queryKey: ["taxi-data", pageInput, paginationModel.pageSize],
     queryFn: () => getTaxiData(pageInput, paginationModel.pageSize),
-     initialData: { data: [] },
+    initialData: { data: [] },
     placeholderData: keepPreviousData,
   });
   const rows = query.data.data!;
@@ -110,7 +110,11 @@ export default function DefaultGrid() {
         columnVisibilityModel={columnVisibilityModel}
         onColumnVisibilityModelChange={setColumnVisibilityModel}
         paginationModel={paginationModel}
-        onPaginationModelChange={params => setPageInput(params.page)}
+        onPaginationModelChange={(params, details) => {
+          if (details.reason === "setPaginationModel") {
+            setPageInput(params.page);
+          }
+        }}
       />
     </Box>
   );
