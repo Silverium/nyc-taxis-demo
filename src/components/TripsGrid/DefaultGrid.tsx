@@ -14,6 +14,7 @@ import roundToNearest from "../../utils/roundToNearest";
 import { NumberInput } from "../NumberInput";
 import { useDispatch } from "react-redux";
 import toasterSlice from "../../store/toaster";
+import { FormControl, FormControlLabel } from "@mui/material";
 
 export default function DefaultGrid() {
   const pageParam = useSearchParam('page');
@@ -72,10 +73,14 @@ export default function DefaultGrid() {
 
   return (
     <Box sx={{ width: 1 }}>
-      <NumberInput value={pageInput} onInputChange={event => console.log("inputChange", event.currentTarget.value)} onChange={(event, value) => {
-        const newValue = value || 0;
-        setPageInput(newValue);
-      }} />
+      <FormControl>
+        <FormControlLabel sx={{"& .MuiFormControlLabel-label":{paddingX: "10px"}}} label="Page" labelPlacement="start" control={
+          <NumberInput value={pageInput} min={0} onInputChange={event => console.log("inputChange", event.currentTarget.value)} onChange={(event, value) => {
+            const newValue = value || 0;
+            setPageInput(newValue);
+          }} />
+        } />
+      </FormControl>
       <DataGrid
         sx={{
           height: "calc(100vh - 200px)",
