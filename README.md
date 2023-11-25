@@ -49,5 +49,6 @@ yarn test
 - translations were not implemented for the sake of simplicity
 - accessibility has not been taken into account for the sake of simplicity
 - As the amount of data is huge and the Mui Data Grid basic does not have nice pagination controls, it was created a `page` input on top so the user can jump to any desired page.
-- created a toaster to warn user when the end of data has been reached and when there is errors with the API.
+- created a toaster (with global state managed with Redux) to warn user when the end of data has been reached and when there is errors with the API.
+- this project used third party component basically, and the only logic implemented was a tiny helper to round to the nearest number, which is the only test in this repository. IMO it makes no sense to test things which are already tested. I won't test React, Material UI components, Redux Toolkit or React Query, as those are battle tested libraries which are already tested on their end.
 
