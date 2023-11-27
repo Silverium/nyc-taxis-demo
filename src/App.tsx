@@ -15,7 +15,10 @@ import Markdown from 'react-markdown'
 export default function App() {
   const [readmeContent, setReadmeContent] = React.useState<string>("");
   React.useEffect(() => {
-    fetch("https://raw.githubusercontent.com/Silverium/nyc-taxis-demo/master/README.md").then(res => res.text()).then(setReadmeContent).catch(console.error);
+    fetch("https://raw.githubusercontent.com/Silverium/nyc-taxis-demo/master/README.md")
+      .then(res => res.text())
+      .then(setReadmeContent)
+      .catch(console.error);
   }, [])
 
   return (
