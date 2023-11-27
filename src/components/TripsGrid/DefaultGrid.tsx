@@ -72,10 +72,10 @@ export default function DefaultGrid() {
   }, [query]);
 
   return (
-    <Box sx={{ width: 1 }}>
-      <FormControl>
+    <Box sx={{ width: 1 }} alignContent="center">
+      <FormControl sx={{ display: "flex", alignItems: "center" }}>
         <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { paddingX: "10px" } }} label="Page" labelPlacement="start" control={
-          <NumberInput value={pageInput} min={0}  onChange={(event, value) => {
+          <NumberInput value={pageInput} min={0} aria-label="Page" onChange={(event, value) => {
             const newValue = value || 0;
             setPageInput(newValue);
           }} />
