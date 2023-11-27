@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./styles.css";
-import { BrowserRouter, Route, Routes, Link as RouterLink } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import DefaultGrid from "./components/TripsGrid/DefaultGrid";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Box, Container } from "@mui/material";
